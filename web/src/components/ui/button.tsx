@@ -1,32 +1,52 @@
-import { Slot } from "@radix-ui/react-slot";
-import { ComponentProps } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { ComponentProps } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { tv } from 'tailwind-variants'
 
-const buttonVariants = tv({
-  base: "text-zinc-400 rounded-lg hover:text-zinc-100 hover:bg-zinc-800 disabled:opacity-50 disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:pointer-events-none",
-
+const button = tv({
+  base: 'flex items-center gap-2 outline-none focus:ring-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold cursor-pointer justify-center ',
   variants: {
-    size: {
-      default: "px-3 py-2",
-      icon: "p-2",
-      "icon-sm": "p-1",
+    variant: {
+      primary:
+        'bg-blue-base hover:bg-blue-dark text-white focus:ring-blue-base rounded-lg h-12 text-sm/7 px-4',
+      secondary:
+        'border border-transparent text-gray-500 bg-gray-200 focus:ring-blue-base-300 rounded-sm text-xs/6 hover:border-blue-base transition-colors p-2',
     },
   },
-
+  
   defaultVariants: {
-    size: "default",
+    variant: 'primary',
   },
-});
+})
 
-type ButtonProps = ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  };
+interface ButtonRootProps extends ComponentProps<'button'> {
+  variant?: 'primary' | 'secondary'
+}
 
-export function Button({ size, className, asChild, ...props }: ButtonProps) {
-  const Component = asChild ? Slot : "button";
-
+function ButtonRoot({
+  children,
+  className,
+  variant,
+  ...props
+}: ButtonRootProps) {
   return (
-    <Component className={buttonVariants({ size, className })} {...props} />
-  );
+    <button className={button({ variant, className })} {...props}>
+      {children}
+    </button>
+  )
+}
+
+interface ButtonIconProps extends ComponentProps<'span'> {}
+
+function ButtonIcon({ className, ...props }: ButtonIconProps) {
+  return (
+    <span
+      className={twMerge('flex items-center text-gray-600', className)}
+      {...props}
+    />
+  )
+}
+
+export const Button = {
+  Root: ButtonRoot,
+  Icon: ButtonIcon,
 }
