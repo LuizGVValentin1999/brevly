@@ -21,7 +21,7 @@ Seu objetivo é oferecer uma solução prática para criar, listar, remover e ge
 
   - Node.js
   - Fastify
-  - Prisma ORM
+  - Drizzle ORM
   - PostgreSQL
   - Zod (validação)
 - **DevOps:**
