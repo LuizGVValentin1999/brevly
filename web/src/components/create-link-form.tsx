@@ -132,7 +132,7 @@ export function CreateLinkForm() {
       <Button.Root
         type="submit"
         className="w-full mt-6"
-        disabled={isSubmitting || !isFormValid}
+        disabled={isSubmitting}
       >
         {isSubmitting ? 'Salvando...' : 'Salvar link'}
       </Button.Root>
